@@ -9,164 +9,131 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.env
+*.rsuser
+*.DotSettings.user
 
-# User-specific files (MonoDevelop/Xamarin Studio)
-*.userprefs
+# VS Code
+.vscode/
+.history/
+.ntvs_analysis.dat
 
-# Mono auto generated files
-mono_crash.*
+########################################
+# Build artifacts
+########################################
 
-# Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-[Ww][Ii][Nn]32/
-[Aa][Rr][Mm]/
-[Aa][Rr][Mm]64/
-[Aa][Rr][Mm]64[Ee][Cc]/
-bld/
-[Oo]bj/
-[Oo]ut/
-[Ll]og/
-[Ll]ogs/
-
-# Build results on 'Bin' directories
-**/[Bb]in/*
-# Uncomment if you have tasks that rely on *.refresh files to move binaries
-# (https://github.com/github/gitignore/pull/3736)
-#!**/[Bb]in/*.refresh
-
-# Visual Studio 2015/2017 cache/options directory
-.vs/
-# Uncomment if you have tasks that create the project's static files in wwwroot
-#wwwroot/
-
-# Visual Studio 2017 auto generated files
-Generated\ Files/
-
-# MSTest test Results
-[Tt]est[Rr]esult*/
-[Bb]uild[Ll]og.*
-*.trx
-
-# NUnit
-*.VisualState.xml
-TestResult.xml
-nunit-*.xml
-
-# Approval Tests result files
-*.received.*
-
-# Build Results of an ATL Project
-[Dd]ebugPS/
-[Rr]eleasePS/
-dlldata.c
-
-# Benchmark Results
-BenchmarkDotNet.Artifacts/
-
-# .NET Core
-project.lock.json
-project.fragment.lock.json
+bin/
+obj/
+out/
 artifacts/
+**/[Bb]in/*
+**/[Oo]bj/*
 
-# ASP.NET Scaffolding
-ScaffoldingReadMe.txt
+# Build logs
+*.log
+*.tlog
+*.buildlog.*
+MSBuild_Logs/
+*.binlog
 
-# StyleCop
-StyleCopReport.xml
-
-# Files built by Visual Studio
-*_i.c
-*_p.c
-*_h.h
-*.ilk
-*.meta
-*.obj
-*.idb
-*.iobj
-*.pch
+# Compiled files
+*.dll
+*.exe
+*.app
 *.pdb
 *.ipdb
-*.pgc
-*.pgd
+*.iobj
+*.tmp
+*.tmp_proj
+*.cache
+*.meta
 *.rsp
-# but not Directory.Build.rsp, as it configures directory-level build defaults
-!Directory.Build.rsp
 *.sbr
 *.tlb
 *.tli
 *.tlh
-*.tmp
-*.tmp_proj
-*_wpftmp.csproj
-*.log
-*.tlog
-*.vspscc
-*.vssscc
-.builds
-*.pidb
+*.ilk
+*.idb
 *.svclog
-*.scc
 
-# Chutzpah Test files
-_Chutzpah*
+########################################
+# Test and coverage
+########################################
 
-# Visual C++ cache files
-ipch/
-*.aps
-*.ncb
-*.opendb
-*.opensdf
-*.sdf
-*.cachefile
-*.VC.db
-*.VC.VC.opendb
-
-# Visual Studio profiler
-*.psess
-*.vsp
-*.vspx
-*.sap
-
-# Visual Studio Trace Files
-*.e2e
-
-# TFS 2012 Local Workspace
-$tf/
-
-# Guidance Automation Toolkit
-*.gpState
-
-# ReSharper is a .NET coding add-in
-_ReSharper*/
-*.[Rr]e[Ss]harper
-*.DotSettings.user
-
-# TeamCity is a build add-in
-_TeamCity*
-
-# DotCover is a Code Coverage Tool
-*.dotCover
-
-# AxoCover is a Code Coverage Tool
-.axoCover/*
-!.axoCover/settings.json
-
-# Coverlet is a free, cross platform Code Coverage Tool
-coverage*.json
-coverage*.xml
-coverage*.info
-
-# Visual Studio code coverage results
+TestResults/
+coverage/
 *.coverage
 *.coveragexml
+*.trx
+*.received.*
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+BenchmarkDotNet.Artifacts/
 
-# NCrunch
+########################################
+# NuGet
+########################################
+
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+
+########################################
+# Entity Framework
+########################################
+
+migrations/
+
+########################################
+# Environment and secrets
+########################################
+
+.env
+.env.*
+*.publishsettings
+*.pubxml
+*.azurePubxml
+
+########################################
+# Docker and database
+########################################
+
+*.pid
+*.seed
+*.db
+*.sqlite
+*.tar
+*.gz
+*.tgz
+healthchecksdb
+
+########################################
+# OS-specific
+########################################
+
+.DS_Store
+Thumbs.db
+
+########################################
+# Node.js
+########################################
+
+node_modules/
+
+########################################
+# ReSharper, DotCover, NCrunch, etc.
+########################################
+
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.dotCover
+.axoCover/*
+*.jmconfig
 _NCrunch_*
 .NCrunch_*
 .*crunch*.local.xml
