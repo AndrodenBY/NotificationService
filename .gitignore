@@ -229,3 +229,5 @@ FodyWeavers.xsd
 *.nvuser
 **/.mfractor/
 .vshistory/
+
+nuget.config
