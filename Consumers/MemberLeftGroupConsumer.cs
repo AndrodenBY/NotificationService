@@ -5,7 +5,7 @@ using NotificationService.Interfaces;
 
 namespace NotificationService.Consumers;
 
-public class MemberLeftGroupConsumer(IEmailService emailService) : IConsumer<MemberLeftGroupEvent>
+public class MemberLeftGroupConsumer(IEmailService emailService, ILogger<IEmailService> logger) : IConsumer<MemberLeftGroupEvent>
 {
     public async Task Consume(ConsumeContext<MemberLeftGroupEvent> context)
     {

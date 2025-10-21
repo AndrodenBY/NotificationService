@@ -5,7 +5,7 @@ using NotificationService.Interfaces;
 
 namespace NotificationService.Consumers;
 
-public class MemberChangedRoleConsumer(IEmailService emailService) : IConsumer<MemberChangedRoleEvent>
+public class MemberChangedRoleConsumer(IEmailService emailService, ILogger<IEmailService> logger) : IConsumer<MemberChangedRoleEvent>
 {
     public async Task Consume(ConsumeContext<MemberChangedRoleEvent> context)
     {

@@ -5,7 +5,7 @@ using SubsTracker.Messaging.Contracts;
 
 namespace NotificationService.Consumers;
 
-public class SubscriptionRenewedConsumer(IEmailService emailService) : IConsumer<SubscriptionRenewedEvent>
+public class SubscriptionRenewedConsumer(IEmailService emailService, ILogger<IEmailService> logger) : IConsumer<SubscriptionRenewedEvent>
 {
     public async Task Consume(ConsumeContext<SubscriptionRenewedEvent> context)
     {
