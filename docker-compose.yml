@@ -27,7 +27,7 @@ services:
 
   papercut:
     image: changemakerstudiosus/papercut-smtp:latest
-    container_name: NotificationService.Papercut
+    container_name: notification-service.papercut
     ports:
       - "37408:8080"
       - "2525:2525"
