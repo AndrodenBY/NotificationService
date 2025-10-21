@@ -2,10 +2,11 @@ using MassTransit;
 using NotificationService.Constant;
 using SubsTracker.Messaging.Contracts;
 using NotificationService.Interfaces;
+using NotificationService.Services;
 
 namespace NotificationService.Consumers;
 
-public class SubscriptionCanceledConsumer(IEmailService emailService) : IConsumer<SubscriptionCanceledEvent>
+public class SubscriptionCanceledConsumer(IEmailService emailService, ILogger<IEmailService> logger) : IConsumer<SubscriptionCanceledEvent>
 {
     public async Task Consume(ConsumeContext<SubscriptionCanceledEvent> context)
     {
@@ -20,19 +21,4 @@ public class SubscriptionCanceledConsumer(IEmailService emailService) : IConsume
             );
     }
 }
-
-
-// public class SubscriptionCanceledConsumer(IFluentEmail email) : IConsumer<SubscriptionCanceledEvent>
-// {
-//     public async Task Consume(ConsumeContext<SubscriptionCanceledEvent> context)
-//     {
-//         var msg = context.Message;
-//         
-//         await email
-//             .To(EmailConstants.recepientEmail)
-//             .Subject($"Subscription cancelled: {msg.SubscriptionName}")
-//             .UsingTemplateFromFile("Templates/SubscriptionCanceled.cshtml", msg)
-//             .SendAsync(context.CancellationToken);
-//     }
-// }
 
