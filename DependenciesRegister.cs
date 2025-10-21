@@ -1,10 +1,5 @@
 using MassTransit;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using FluentEmail.Core;
-using FluentEmail.Razor;
-using FluentEmail.MailKitSmtp; 
 using NotificationService.Options;
 using NotificationService.Interfaces;
 using NotificationService.Services;
@@ -15,46 +10,31 @@ public static class DependenciesRegister
 {
     public static IServiceCollection RegisterNotificationServiceDependencies(this IServiceCollection services, IConfiguration configuration)
     {
-        var emailSettings = configuration.GetSection("EmailSettings");
-        services.AddFluentEmail(emailSettings["DefaultUserName"], emailSettings["Sender"])
-            .AddSmtpSender(emailSettings["SMTPSetting:Host"], emailSettings.GetValue<int>("Port"));
-        
+        services.Configure<EmailSettingsOptions>(configuration.GetSection(EmailSettingsOptions.SectionName));
         services.Configure<RabbitMqOptions>(configuration.GetSection(RabbitMqOptions.SectionName));
         
+        var emailSettingsOptions = configuration.GetSection(EmailSettingsOptions.SectionName).Get<EmailSettingsOptions>();
+        
+        services.AddFluentEmail(emailSettingsOptions.DefaultUserName, emailSettingsOptions.Sender)
+            .AddRazorRenderer()
+            .AddSmtpSender(emailSettingsOptions.Host, emailSettingsOptions.Port);
         services.AddScoped<IEmailService, EmailService>();
         
-        // var host = emailSettings["SMTPSetting:Host"];
-        // var port = emailSettings.GetValue<int>("Port");
-        // var enableSsl = emailSettings.GetValue<bool>("EnableSsl"); 
-        //
-        // services.AddFluentEmail(configuration["DefaultSenderEmail"])
-        //         .AddRazorRenderer()
-        //         .AddMailKitSender(new SmtpClientOptions 
-        //         {
-        //             Server = host,
-        //             Port = port,
-        //             User = configuration["DefaultUserName"], 
-        //             Password = configuration["SenderEmailPassword"],
-        //             UseSsl = enableSsl 
-        //         });
-        
-        services.AddMassTransit(x =>
+        services.AddMassTransit(busConfigurator =>
         {
-            x.AddConsumers(typeof(DependenciesRegister).Assembly); 
-            x.UsingRabbitMq((context, cfg) =>
+            busConfigurator.AddConsumers(typeof(DependenciesRegister).Assembly); 
+            busConfigurator.UsingRabbitMq((context, configurator) =>
             {
-                var options = context.GetRequiredService<IOptions<RabbitMqOptions>>().Value;
-                
-                cfg.Host(options.HostName, h =>
+                var rabbitMqOptions = context.GetRequiredService<IOptions<RabbitMqOptions>>().Value;
+                configurator.Host(rabbitMqOptions.HostName, rabbitMqOptions.VirtualHost, host =>
                 {
-                    h.Username(configuration["RabbitMq:UserName"]);
-                    h.Password(configuration["RabbitMq:Password"]);
+                    host.Username(rabbitMqOptions.UserName);
+                    host.Password(rabbitMqOptions.Password);
                 });
                 
-                cfg.ConfigureEndpoints(context);
+                configurator.ConfigureEndpoints(context);
             });
         });
-//        services.AddMassTransitHostedService(true);
 
         return services;
     }
