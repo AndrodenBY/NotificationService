@@ -19,5 +19,3 @@ public class MemberLeftGroupConsumer(IEmailService emailService, ILogger<IEmailS
             cancellationToken: context.CancellationToken);
     }
 }
-
-

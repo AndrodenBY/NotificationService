@@ -20,4 +20,3 @@ public class SubscriptionRenewedConsumer(IEmailService emailService, ILogger<IEm
         );
     }
 }
-
