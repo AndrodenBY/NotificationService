@@ -19,7 +19,7 @@ public class EmailService(
     {
         var templateFullPath = Path.Combine(AppContext.BaseDirectory, templatePath);
         
-        await email
+        var response = await email
             .To(EmailConstants.RecepientEmail)
             .Subject(subject)
             .UsingTemplateFromFile(templateFullPath, eventModel, isHtml: true) 
