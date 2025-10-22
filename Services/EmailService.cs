@@ -25,7 +25,7 @@ public class EmailService(
             .UsingTemplateFromFile(templateFullPath, eventModel, isHtml: true) 
             .SendAsync(cancellationToken); 
         
-        //ProcessResponse(response, EmailConstants.RecepientEmail);
+        ProcessResponse(response, EmailConstants.RecepientEmail);
     }
 
     private void ProcessResponse(SendResponse response, string recipientEmail)
