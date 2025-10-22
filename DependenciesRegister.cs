@@ -18,6 +18,7 @@ public static class DependenciesRegister
         services.AddFluentEmail(emailSettingsOptions.DefaultUserName, emailSettingsOptions.Sender)
             .AddRazorRenderer()
             .AddSmtpSender(emailSettingsOptions.Host, emailSettingsOptions.Port);
+        
         services.AddScoped<IEmailService, EmailService>();
         
         services.AddMassTransit(busConfigurator =>
