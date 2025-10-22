@@ -7,6 +7,9 @@ builder.Services.AddOpenApi();
 builder.Configuration.AddUserSecrets<Program>();
 builder.Services.RegisterNotificationServiceDependencies(builder.Configuration);
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

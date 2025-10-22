@@ -19,13 +19,13 @@ public class EmailService(
     {
         var templateFullPath = Path.Combine(AppContext.BaseDirectory, templatePath);
         
-        await email
+        var response = await email
             .To(EmailConstants.RecepientEmail)
             .Subject(subject)
             .UsingTemplateFromFile(templateFullPath, eventModel, isHtml: true) 
             .SendAsync(cancellationToken); 
         
-        //ProcessResponse(response, EmailConstants.RecepientEmail);
+        ProcessResponse(response, EmailConstants.RecepientEmail);
     }
 
     private void ProcessResponse(SendResponse response, string recipientEmail)

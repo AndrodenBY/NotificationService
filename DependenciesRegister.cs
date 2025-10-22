@@ -26,7 +26,7 @@ public static class DependenciesRegister
             busConfigurator.UsingRabbitMq((context, configurator) =>
             {
                 var rabbitMqOptions = context.GetRequiredService<IOptions<RabbitMqOptions>>().Value;
-                configurator.Host(rabbitMqOptions.HostName, rabbitMqOptions.VirtualHost, host =>
+                configurator.Host(rabbitMqOptions.HostName, rabbitMqOptions.VirtualHostName, host =>
                 {
                     host.Username(rabbitMqOptions.UserName);
                     host.Password(rabbitMqOptions.Password);
