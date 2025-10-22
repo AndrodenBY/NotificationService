@@ -10,13 +10,13 @@ public class SubscriptionCanceledConsumer(IEmailService emailService, ILogger<IE
 {
     public async Task Consume(ConsumeContext<SubscriptionCanceledEvent> context)
     {
-        var @event = context.Message;
+        var subscriptionCanceledEvent = context.Message;
 
         await emailService.Send(
             recipientEmail: EmailConstants.RecepientEmail,
-            subject: string.Format(SubjectConstants.SubscriptionCanceled, @event.Name),
+            subject: string.Format(SubjectConstants.SubscriptionCanceled, subscriptionCanceledEvent.Name),
             templatePath: TemplatePathConstants.SubscriptionCanceled,
-            eventModel: @event,
+            eventModel: subscriptionCanceledEvent,
             cancellationToken: context.CancellationToken
             );
     }

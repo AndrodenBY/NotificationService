@@ -9,13 +9,13 @@ public class SubscriptionRenewedConsumer(IEmailService emailService, ILogger<IEm
 {
     public async Task Consume(ConsumeContext<SubscriptionRenewedEvent> context)
     {
-        var @event = context.Message;
+        var subscriptionRenewedEvent = context.Message;
 
         await emailService.Send(
             recipientEmail: EmailConstants.RecepientEmail,
-            subject: string.Format(SubjectConstants.SubscriptionRenewed, @event.Name),
+            subject: string.Format(SubjectConstants.SubscriptionRenewed, subscriptionRenewedEvent.Name),
             templatePath: TemplatePathConstants.SubscriptionRenewed,
-            eventModel: @event,
+            eventModel: subscriptionRenewedEvent,
             cancellationToken: context.CancellationToken
         );
     }

@@ -9,13 +9,13 @@ public class MemberChangedRoleConsumer(IEmailService emailService, ILogger<IEmai
 {
     public async Task Consume(ConsumeContext<MemberChangedRoleEvent> context)
     {
-        var @event = context.Message;
+        var memberChangedRoleEvent = context.Message;
         
         await emailService.Send(
             recipientEmail: EmailConstants.RecepientEmail,
-            subject: string.Format(SubjectConstants.MemberChangedRole, @event.Email, @event.GroupName),
+            subject: string.Format(SubjectConstants.MemberChangedRole, memberChangedRoleEvent.Email, memberChangedRoleEvent.GroupName),
             templatePath: TemplatePathConstants.MemberChangedRole,
-            eventModel: @event,
+            eventModel: memberChangedRoleEvent,
             cancellationToken: context.CancellationToken);
     }
 }

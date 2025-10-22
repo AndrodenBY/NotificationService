@@ -9,13 +9,13 @@ public class MemberLeftGroupConsumer(IEmailService emailService, ILogger<IEmailS
 {
     public async Task Consume(ConsumeContext<MemberLeftGroupEvent> context)
     {
-        var @event = context.Message;
+        var memberLeftGroupEvent = context.Message;
         
         await emailService.Send(
             recipientEmail: EmailConstants.RecepientEmail,
-            subject: string.Format(SubjectConstants.MemberLeftGroup, @event.Email, @event.GroupName),
+            subject: string.Format(SubjectConstants.MemberLeftGroup, memberLeftGroupEvent.Email, memberLeftGroupEvent.GroupName),
             templatePath: TemplatePathConstants.MemberLeftGroup,
-            eventModel: @event,
+            eventModel: memberLeftGroupEvent,
             cancellationToken: context.CancellationToken);
     }
 }
