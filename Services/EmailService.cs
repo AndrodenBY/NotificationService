@@ -1,31 +1,26 @@
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using FluentEmail.Core;
 using FluentEmail.Core.Models;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
-using Microsoft.Extensions.Logging;
-using NotificationService.Constant;
-using SubsTracker.Messaging.Contracts;
 using NotificationService.Interfaces;
+using SubsTracker.Messaging.Contracts;
 
 namespace NotificationService.Services;
 
 public class EmailService(
-    IFluentEmail email, 
+    IFluentEmail email,
     ILogger<EmailService> logger) : IEmailService
 {
-    public async Task Send<TEvent>(string recipientEmail, string subject, string templatePath, TEvent eventModel, CancellationToken cancellationToken) where TEvent : BaseEvent
+    public async Task Send<TEvent>(string recipientEmail, string subject, string templatePath, TEvent eventModel,
+        CancellationToken cancellationToken) where TEvent : BaseEvent
     {
         var templateFullPath = Path.Combine(AppContext.BaseDirectory, templatePath);
-        
+
         var response = await email
-            .To(EmailConstants.RecepientEmail)
+            .To(recipientEmail)
             .Subject(subject)
-            .UsingTemplateFromFile(templateFullPath, eventModel, isHtml: true) 
-            .SendAsync(cancellationToken); 
-        
-        ProcessResponse(response, EmailConstants.RecepientEmail);
+            .UsingTemplateFromFile(templateFullPath, eventModel)
+            .SendAsync(cancellationToken);
+
+        ProcessResponse(response, recipientEmail);
     }
 
     private void ProcessResponse(SendResponse response, string recipientEmail)
@@ -33,14 +28,12 @@ public class EmailService(
         if (!response.Successful)
         {
             logger.LogError(
-                "Email sending failed to {Recipient}. Total errors: {ErrorCount}", 
-                recipientEmail, 
+                "Email sending failed to {Recipient}. Total errors: {ErrorCount}",
+                recipientEmail,
                 response.ErrorMessages.Count);
-            
+
             foreach (var error in response.ErrorMessages)
-            {
                 logger.LogError("Email failure reason to {Recipient}: {Error}", recipientEmail, error);
-            }
         }
         else
         {
