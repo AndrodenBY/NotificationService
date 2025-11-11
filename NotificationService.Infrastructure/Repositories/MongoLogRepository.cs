@@ -8,18 +8,16 @@ using NotificationService.Infrastructure.Options;
 
 namespace NotificationService.Infrastructure.Repositories;
 
-public class MongoLogRepository(IOptions<MongoDbSettings> mongoSettings) : ILogRepository
+public class MongoLogRepository(IMongoCollection<NotificationLogEntry> mongoCollection) : ILogRepository
 {
-    private readonly IMongoCollection<NotificationLogEntry> _mongoCollection = MongoCollectionInitializer.InitializeCollection(mongoSettings.Value);
-
     public async Task AddLogEntry(NotificationLogEntry notificationLogEntry, CancellationToken cancellationToken)
     {
-        await _mongoCollection.InsertOneAsync(notificationLogEntry, new InsertOneOptions(), cancellationToken);
+        await mongoCollection.InsertOneAsync(notificationLogEntry, new InsertOneOptions(), cancellationToken);
     }
 
     public async Task<List<NotificationLogEntry>> GetFailedLogs(DateTime since, CancellationToken cancellationToken)
     {
-        return await _mongoCollection
+        return await mongoCollection
             .Find(events => !events.Success && events.CreatedAt >= since)
             .SortByDescending(events => events.CreatedAt)
             .ToListAsync(cancellationToken);
@@ -27,7 +25,7 @@ public class MongoLogRepository(IOptions<MongoDbSettings> mongoSettings) : ILogR
 
     public async Task<NotificationLogEntry?> GetByEventId(Guid eventId, CancellationToken cancellationToken)
     {
-        return await _mongoCollection
+        return await mongoCollection
             .Find(events => events.Id == eventId)
             .FirstOrDefaultAsync(cancellationToken);
     }

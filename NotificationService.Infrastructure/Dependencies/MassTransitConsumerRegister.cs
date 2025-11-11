@@ -9,8 +9,7 @@ namespace NotificationService.Infrastructure.Dependencies;
 
 public static class MassTransitConsumerRegister
 {
-    public static void AddMassTransitConsumers(this IServiceCollection services,
-        IConfiguration configuration)
+    public static void AddMassTransitConsumers(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<RabbitMqOptions>(configuration.GetSection(RabbitMqOptions.SectionName));
         
@@ -39,6 +38,7 @@ public static class MassTransitConsumerRegister
                         retry.Intervals(100, 500, 1000);
                         retry.Ignore<FormatException>();
                         retry.Ignore<ArgumentException>();
+                        retry.Ignore<InvalidOperationException>();
                     });
                 });
                 

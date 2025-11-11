@@ -9,14 +9,14 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY . .
-RUN dotnet build "NotificationService.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "NotificationService.Worker/NotificationService.Worker.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "NotificationService.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "NotificationService.Worker/NotificationService.Worker.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY --from=build /src/Templates /app/Templates
-ENTRYPOINT ["dotnet", "NotificationService.API.dll"]
+COPY --from=publish /app/publish/Templates /app/Templates
+ENTRYPOINT ["dotnet", "NotificationService.Worker.dll"]
