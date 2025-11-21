@@ -4,10 +4,13 @@ using NotificationService.Domain.Logging;
 
 namespace NotificationService.Infrastructure.Repositories;
 
-public class MongoLogRepository(IMongoCollection<NotificationLogEntry> mongoCollection) : ILogRepository
+public class MongoLogRepository(IMongoContext context) : ILogRepository
 {
+    private readonly IMongoCollection<NotificationLogEntry> _mongoCollection =
+        context.Database.GetCollection<NotificationLogEntry>(nameof(NotificationLogEntry));
+
     public async Task AddLogEntry(NotificationLogEntry notificationLogEntry, CancellationToken cancellationToken)
     {
-        await mongoCollection.InsertOneAsync(notificationLogEntry, new InsertOneOptions(), cancellationToken);
+        await _mongoCollection.InsertOneAsync(notificationLogEntry, new InsertOneOptions(), cancellationToken);
     }
 }
