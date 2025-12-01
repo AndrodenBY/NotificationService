@@ -1,9 +1,6 @@
-using Microsoft.AspNetCore.Diagnostics;
 using NotificationService.Infrastructure.Dependencies;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddOpenApi();
+var builder = Host.CreateApplicationBuilder(args);
 
 builder.Configuration.AddUserSecrets<Program>();
 builder.Services.RegisterNotificationServiceDependencies(builder.Configuration);
@@ -11,13 +8,6 @@ builder.Services.RegisterNotificationServiceDependencies(builder.Configuration);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
-var app = builder.Build();
+var host = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
-app.UseHttpsRedirection();
-
-app.Run();
+host.Run();
