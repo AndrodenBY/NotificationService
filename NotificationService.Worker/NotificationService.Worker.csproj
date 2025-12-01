@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <UserSecretsId>baf1a03e-fec4-4fd1-85ed-30594cf4dca8</UserSecretsId>
+        <PreserveCompilationContext>true</PreserveCompilationContext>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentEmail.Core" Version="3.0.2" />
+        <PackageReference Include="FluentEmail.Razor" Version="3.0.2" />
+        <PackageReference Include="FluentEmail.Smtp" Version="3.0.2" />
+        <PackageReference Include="FluentEmailer.MailKit" Version="1.0.0-rc2" />
+        <PackageReference Include="MailKit" Version="4.14.1" />
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.4" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8" />
+        <PackageReference Include="SubsTracker.Messaging" Version="1.1.1" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.8"/>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <EnableDefaultContentItems>false</EnableDefaultContentItems>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <Content Include="..\NotificationService.Infrastructure\Templates\**\*.cshtml" LinkBase="Templates">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\NotificationService.Infrastructure\NotificationService.Infrastructure.csproj" />
+    </ItemGroup>
+</Project>
